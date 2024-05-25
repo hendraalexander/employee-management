@@ -5,9 +5,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { Service } from './services/services.service';
-import { LoginComponent } from './pages/login/login.component';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { Service } from '../services/services.service';
 
 @Component({
   selector: 'app-root',
@@ -22,34 +20,17 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     RouterLink,
     RouterLinkActive,
     NzButtonModule,
-    LoginComponent,
   ],
-  providers: [NzModalService],
   // templateUrl: './layout-2/layout-2.component.html',
   // styleUrls: ['./layout-2/layout-2.component.css'],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.css'],
 })
-export class AppComponent {
-  isLoggedIn = false;
-  constructor(private service: Service, private modal: NzModalService) {
-    this.isLoggedIn = this.service.isLoggedIn() ? true : false;
-  }
+export class LayoutComponent {
+  constructor(private service: Service) {}
   isCollapsed = true;
 
   logOut() {
     this.service.logout();
-    window.location.href = '/login';
-  }
-
-  showModal(): void {
-    this.modal.confirm({
-      nzTitle: 'Confirm',
-      nzContent: 'Are You Sure?',
-      nzClosable: false,
-      nzOkText: 'Yes',
-      nzCancelText: 'No',
-      nzOnOk: () => this.logOut(),
-    });
   }
 }

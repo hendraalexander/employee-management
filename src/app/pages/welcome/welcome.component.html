@@ -1,0 +1,121 @@
+<div nz-row class="pb-3">
+    <div nz-col nzSpan="16">
+        <h2>Employee List</h2>
+    </div>
+    <!-- <div nz-col nzSpan="8"></div> -->
+    <div nz-col nzSpan="8">
+        <button (click)="showModal()" class="float-end" nz-button nzType="primary">
+            <span nz-icon nzType="plus" nzTheme="outline"></span>
+        </button>
+    </div>
+</div>
+<div class="input-group pb-3">
+    <input type="text" (change)="handleChange($event)" [(ngModel)]="filter.userName" aria-label="Username" placeholder="Username" class="form-control">
+    <input type="text" (change)="handleChange($event)" [(ngModel)]="filter.firstName" aria-label="First name" placeholder="First Name" class="form-control">
+    <input type="text" (change)="handleChange($event)" [(ngModel)]="filter.email" aria-label="Email" placeholder="Email" class="form-control">
+    <button class="btn btn-danger" (click)="clearFilter()" type="button" id="button-addon2">Clear</button>
+</div>
+<!-- 
+<div nz-row class="pb-3" nz-flex nzGap="small">
+    <div nz-col nzSpan="6" nz-sm="6">
+        <input nz-input placeholder="Username" [(ngModel)]="filter.userName" type="text" (change)="handleChange($event)" />
+    </div>
+    <div nz-col nzSpan="6" nz-sm="6">
+        <input nz-input placeholder="First Name" [(ngModel)]="filter.firstName" type="text" (change)="handleChange($event)"/>
+    </div>
+    <div nz-col nzSpan="6" nz-sm="6">
+        <input nz-input placeholder="Email" [(ngModel)]="filter.email" type="text" (change)="handleChange($event)"/>
+    </div>
+    <div nz-col nzSpan="6" nz-sm="6">
+        <div nz-row nz-flex nzGap="small">
+            <div nz-col nzSpan="12">
+                <button class="float-start" nz-button nzDanger nzType="primary">
+                    <span nz-icon nzType="close" nzTheme="outline"></span>
+                </button>
+            </div>
+            <div nz-col nzSpan="9">
+                <button routerLink="/create" class="float-end" nz-button nzType="primary" (click)="clearFilter()">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+    <div nz-col nzSpan="2">
+        <button routerLink="/create" class="float-end" nz-button nzType="primary" (click)="clearFilter()">
+            <span nz-icon nzType="plus" nzTheme="outline"></span>
+        </button>
+    </div>
+</div> -->
+
+<div nz-row class="pb-3">
+    <nz-table #sortTable 
+    [nzData]="listOfData" 
+    [nzShowSizeChanger] = "true"
+    [nzPageSizeOptions]="[5, 10, 20, 30]"
+    [nzPageSize]="10"
+    [nzLoading]="false"
+    [nzTotal]="0"
+    nzTableLayout="fixed">
+        <thead>
+            <tr>
+            <th nzColumnKey="action">Actions</th>
+            <th *ngFor="let column of listOfColumn" 
+                [nzSortFn]="column.compare" 
+                [nzSortPriority]="column.priority">
+                {{ column.title }}
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of sortTable.data; let i = index">
+            <td>
+                <span (click)="detail(data)" nz-icon [nzType]="'info-circle'" style=" cursor:pointer; font-size: 25px; color: #08c;"></span>&nbsp;
+                <span (click)="update(data)" nz-icon [nzType]="'edit'" style=" cursor:pointer; font-size: 25px; color: rgb(204, 109, 0);"></span>&nbsp;
+                <span (click)="showConfirm(data.id)" nz-icon [nzType]="'delete'" style=" cursor:pointer; font-size: 25px; color: rgb(204, 0, 0);"></span>
+            </td>
+            <td>{{ data.userName }}</td>
+            <td>{{ data.firstName }}</td>
+            <td>{{ data.lastName }}</td>
+            <td>{{ data.status }}</td>
+            <td>{{ data.email }}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+
+<!-- Modal Create -->
+<nz-modal
+    nzDraggable
+    nzClosable="false"
+    nzMaskClosable="false"
+    [(nzVisible)]="isVisible"
+    [nzTitle]="title"
+    [nzOkLoading]="isOkLoading"
+    [nzWidth]="1000"
+    nzFooter=" "
+>
+    <app-create [isUpdate]="isUpdate" [data]="selectedData" (close)="handleCancel()" (dataSubmitted)="handleSave()" *nzModalContent></app-create>
+    <!-- <p *nzModalContent>Modal Content</p> -->
+
+    <!-- <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isOkLoading">Save</button>
+    </ng-template> -->
+</nz-modal>
+
+<!-- Modal Detail -->
+<nz-modal
+    nzDraggable
+    nzClosable="false"
+    nzMaskClosable="false"
+    [(nzVisible)]="isDetailVisible"
+    nzTitle="Detail Employee"
+    [nzWidth]="1000"
+    [nzFooter]="modalFooter"
+>
+    <app-detail *nzModalContent [data]="selectedData" ></app-detail>
+    <ng-template #modalFooter>
+        <button (click)="closeDetail()" nz-button nzType="primary">Ok</button>
+    </ng-template>
+</nz-modal>

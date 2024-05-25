@@ -1,0 +1,97 @@
+<div class="container text-center" >
+    <form [formGroup] = "form">
+        <div class="row">
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-12">
+                        <label class="form-label text-start w-100" for="userName">User Name</label>
+                        <input id="userName" formControlName="userName" class="form-control">
+                        @if (this.form.controls['userName'].dirty && !this.form.controls['userName'].valid) {
+                            <p class="text-start text-danger">User Name is Required!</p>
+                        }
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-start w-100" for="firstName">First Name</label>
+                        <input id="firstName" formControlName="firstName" class="form-control">
+                        @if (this.form.controls['firstName'].dirty && !this.form.controls['firstName'].valid) {
+                            <p class="text-start text-danger">First Name is Required!</p>
+                        }
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-start w-100" for="lastName">Last Name</label>
+                        <input id="lastName" formControlName="lastName" class="form-control">
+                        @if (this.form.controls['lastName'].dirty && !this.form.controls['lastName'].valid) {
+                            <p class="text-start text-danger">Last Name is Required!</p>
+                        }
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label text-start w-100" for="email">Email</label>
+                        <input id="email" type="email" formControlName="email" class="form-control">
+                        @if (this.form.controls['email'].dirty && !this.form.controls['email'].value) {
+                            <p class="text-start text-danger">Email is Required!</p>
+                        }
+                        @if (this.form.controls['email'].errors?.['email']) {
+                            <p class="text-start text-danger">Invalid Email Address</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="col-12">
+                    <label class="form-label text-start w-100" for="birthDate">Birth Date</label>
+                    <nz-date-picker id="birthDate" class="form-control mb-2" 
+                    [nzDisabledDate]="disabledDate" nzFormat="dd-MMM-yyyy" 
+                    formControlName="birthDate" (ngModelChange)="onChange($event)"></nz-date-picker>
+                    @if (this.form.controls['birthDate'].dirty && !this.form.controls['birthDate'].valid) {
+                        <p class="text-start text-danger">Birth Date is Required!</p>
+                    }
+                </div>
+                <div class="col-12">
+                    <label class="form-label text-start w-100" for="basicSalary">Basic Salary</label>
+                    <input id="basicSalary" formControlName="basicSalary" class="form-control" 
+                    currencyMask [options]="{ align: 'left', prefix: 'Rp.', thousands: '.', decimal: ',' }">
+                    @if (this.form.controls['basicSalary'].dirty && !this.form.controls['basicSalary'].valid) {
+                        <p class="text-start text-danger">Basic Sallary is Required!</p>
+                    }
+                </div>
+                <div class="col-12">
+                    <label class="form-label text-start w-100" for="status">Status</label>
+                    <input id="status" formControlName="status" class="form-control">
+                    @if (this.form.controls['status'].dirty && !this.form.controls['status'].valid) {
+                        <p class="text-start text-danger">Status is Required!</p>
+                    }
+                </div>
+                <div class="col-12">
+                    <label class="form-label text-start w-100" for="group">Group</label>
+                    <input id="group" formControlName="group" 
+                        class="form-control" 
+                        nz-input 
+                        [nzAutocomplete]="auto"
+                        (ngModelChange)="onGroupChange($event)"
+                    >
+                    <nz-autocomplete [nzDataSource]="filteredOptions" #auto></nz-autocomplete>
+                    @if (this.form.controls['group'].dirty && !this.form.controls['group'].valid) {
+                        <p class="text-start text-danger">Group is Required!</p>
+                    }
+                </div>
+            </div>
+            <div class="col-4 text-start">
+                <label class="form-label text-start w-100" for="description">Description</label>
+                <textarea style="height: 115px;" id="description" formControlName="description" class="form-control"></textarea>
+                @if (this.form.controls['description'].dirty && !this.form.controls['description'].valid) {
+                    <p class="text-start text-danger">Description is Required!</p>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="col float-end px-3">
+                    <button class="form-control" (click)="submitForm()" type="submit" nz-button nzType="primary" [nzLoading]="isOkLoading">Save</button>
+                </div>
+                <div class="col float-end">
+                    <button class="form-control" (click)="closeForm()" nz-button nzDanger nzType="default" >Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

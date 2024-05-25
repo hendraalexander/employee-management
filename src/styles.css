@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* If you have the font files locally */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* If you're linking to a CDN */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  src: url('https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLDz8Z1xlFd2JQEk.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
