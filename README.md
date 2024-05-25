@@ -14,5 +14,5 @@ You can choose the accounts below to Login:
 **username** : _admin_  
 **password** : _admin_  
 or  
-**username** : _admin_  
+**username** : _user_  
 **password** : _admin_
