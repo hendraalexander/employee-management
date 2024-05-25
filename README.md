@@ -9,10 +9,10 @@ Navigate to `http://localhost:4200/`. The application will automatically reload 
 
 ## How To Login?
 
-You can choose accounts below for Login : 
+You can choose the accounts below to Login:
 
-username : admin
-password : admin
-or
-username : user
-password : admin
+**username** : _admin_  
+**password** : _admin_  
+or  
+**username** : _admin_  
+**password** : _admin_
